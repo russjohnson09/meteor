@@ -12,7 +12,7 @@
 
 <template name="addtask">
     <div class="addtask">
-        <input>
+        <input id="taskName">
         <button id="addtask">Add</button>
     </div>
 </template>
@@ -21,18 +21,31 @@
 <template name="tasks">
     <div class="task-list">
         <h1>Tasks</h1>
+    {{#if tasks.count }}
         <table>
+        <th>
+        <td>Name</td>
+        <td>Assigned to</td>
+        </th>
+        {{#each tasks}}
         <tr>
-            {{> task}}
+        {{> task}}
         </tr>
+        {{/each}}
         </table>
+    {{else}}
+        No tasks to display.
+    {{/if}}
     </div>
 </template>
 
 <template name="task">
     <div class="task">
         <td>
-            Buy food.
+            {{name}}
+        </td>
+        <td>
+            {{assignedUser _id}}
         </td>
     </div>
 </template>
