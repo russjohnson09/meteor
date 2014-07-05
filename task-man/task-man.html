@@ -7,14 +7,49 @@
     <div id="container" class="nighttime">
     {{> addtask}}
     {{> tasks}}
+    {{> userlist}}
     </div>
 </body>
 
+<template name="userlist">
+    <h1>User List</h1>
+    {{#if users.count}}
+        {{#each users}}
+            {{>usersum}}
+        {{/each}}
+    {{else}}
+        No users to display.
+    {{/if}}
+</template>
+
+<template name="usersum">
+    <h1>{{name}}</h1>
+    <table>
+        <tr><td>Completed tasks</td><td>{{tasks.complete}}</td></tr>
+        <tr><td>Incomplete tasks</td><td>{{tasks.incomplete}}</td></tr>
+        <tr><td>Total tasks</td><td>{{tasks.count}}</td></tr>
+    </table>
+</template>
+
 <template name="addtask">
     <div class="addtask">
-        <input id="taskName">
+        <label for="taskname">Name of Task:</label><input id="taskname">
+        {{> userinput}}
         <button id="addtask">Add</button>
     </div>
+</template>
+
+<template name="userinput">
+    <label for="user" >User:</label><input id="user" list="userlist">
+    <datalist id="userlist">
+        {{#each users}}
+            {{>useroptions}}
+        {{/each}}
+    </datalist>
+</template>
+
+<template name="useroptions">
+    <option data-id='{{_id}}' value='{{name}}'></option>
 </template>
 
 
@@ -45,7 +80,7 @@
             {{name}}
         </td>
         <td>
-            {{assignedUser _id}}
+            {{assignedUser uid}}
         </td>
     </div>
 </template>
@@ -53,7 +88,17 @@
 
 
 <template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+    <ul>
+        <li>Total - {{tasks.count}} </li>
+        <li>Completed tasks - {{tasks.complete}} </li>
+        <li>Incomplete tasks - {{tasks.incomplete}} </li>
+    </ul>
 </template>
+
+
+
+
+
+
+
+
