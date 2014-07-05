@@ -1,0 +1,46 @@
+<head>
+  <title>Task Manager</title>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+    <div id="container" class="nighttime">
+    {{> addtask}}
+    {{> tasks}}
+    </div>
+</body>
+
+<template name="addtask">
+    <div class="addtask">
+        <input>
+        <button id="addtask">Add</button>
+    </div>
+</template>
+
+
+<template name="tasks">
+    <div class="task-list">
+        <h1>Tasks</h1>
+        <table>
+        <tr>
+            {{> task}}
+        </tr>
+        </table>
+    </div>
+</template>
+
+<template name="task">
+    <div class="task">
+        <td>
+            Buy food.
+        </td>
+    </div>
+</template>
+
+
+
+<template name="hello">
+  <h1>Hello World!</h1>
+  {{greeting}}
+  <input type="button" value="Click" />
+</template>
