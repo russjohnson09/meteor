@@ -4,15 +4,25 @@ Template.userlist.users = function() {
 
 Template.usersum.tasks = function(uid) {
     var tasks = {};
-    tasks.count = 1;
-    tasks.complete = 1;
+    var c = Tasks.find({});
+    tasks.complete = 0; 
+    tasks.incomplete = 0;
+    c.forEach(function(task) {
+        if (task.isComplete) {
+            tasks.complete++;
+        }
+        else {
+            tasks.incomplete++;
+        }
+    });
+    tasks.count = c.count();
     return tasks;
 };
 
 Template.tasks.tasks = function () {
     var c = Tasks.find({});
     console.log(c);
-    return Tasks.find({});
+    return c;
 };
 
 Template.userinput.users = function() {
@@ -20,12 +30,18 @@ Template.userinput.users = function() {
 };
 
 Template.task.assignedUser = function(uid) {
-var user = Users.findOne({_id: uid});
-if (user) {
-    return user.name;
-}
-return "";
+    var user = Users.findOne({_id: uid});
+    if (user) {
+        return user.name;
+    }
+    return "";
 };
+
+Template.task.events({
+    'click #completetask': function(e) {
+        
+    }
+});
 
 Template.addtask.events({
 'click #addtask': function (e) {
@@ -43,12 +59,13 @@ Template.addtask.events({
                 uid = Users.insert({name: userName});
             }
         }
+        console.log(name);
+        console.log(uid);
         Tasks.insert({name: name, uid: uid});
-}
+    }
 });
   
 Meteor.startup(function () {
     Meteor.subscribe('tasks');
     Meteor.subscribe('users');
-    if (Tasks
 });

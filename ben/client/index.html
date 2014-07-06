@@ -1,0 +1,65 @@
+<head>
+    <title>Medical Expenses</title>
+</head>
+
+<body>
+  {{> main}}
+</body>
+
+
+<template name="main">
+    <h1>Calculate your expected medical expenses</h1>
+        <label for="name">Name:</label><input id="expenses-name" list="expenses">
+        <datalist id="expenses">
+            {{#each expenses}}
+                <option data-id='{{_id}}' value='{{name}}'></option>
+            {{/each}}
+        </datalist>
+        <button id="search">Search</button>
+        {{#if hasSelected}}
+            {{> benefits}}
+            {{> expense}}
+            {{> expected}}
+        {{else}}
+            <br />Please select a patient.
+        {{/if}}
+</template>
+
+<template name="benefits">
+    <h1>Benefits for {{name}}</h1>
+    <table>
+    <tr>
+    <td><label for="coins">Coinsurance:</label></td><td><input id="coins" value="{{coins}}"></td>
+    </tr>
+    <tr>
+    <td><label for="deductible">Deductible:</label></td><td><input id="deductible" value="{{deductible}}"></td>
+    </tr>
+    </table>
+    <button id="applybenefits">Apply</button>
+</template>
+
+<template name="expense">
+    {{#each charges}}
+        {{amount}}
+    {{/each}}
+</template>
+
+<template name="expected">
+    <h1>Expected Amount</h1>
+    <table>
+    <tr>
+        <th>Patient Name</th>
+        <th>Allowed Amount</th>
+        <th>Patient Liablity Total</th>
+        <th>Deductible Start</th>
+        <th>Deductible End</th>
+        </tr>
+    <tr>
+        <td>{{name}}</td>
+        <td>{{aa}}</td>
+        <td>{{self}}</td>
+        <td>{{deductiblestart}}</td>
+        <td>{{deductibleend}}</td>
+    </tr>
+    </table>
+</template>

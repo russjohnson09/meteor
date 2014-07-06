@@ -19,3 +19,15 @@ html, body {
 .addtask {
     padding: 10px;
 }
+
+table {
+    border-collapse: collapse;
+}
+
+.borders td, .borders th,.borders tr {
+    border: 1px solid black;
+}
+
+th {
+    padding: 0 10px 0 10px;
+}

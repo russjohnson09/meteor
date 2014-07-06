@@ -4,7 +4,7 @@
 </head>
 
 <body>
-    <div id="container" class="nighttime">
+    <div id="container">
     {{> addtask}}
     {{> tasks}}
     {{> userlist}}
@@ -57,11 +57,12 @@
     <div class="task-list">
         <h1>Tasks</h1>
     {{#if tasks.count }}
-        <table>
-        <th>
-        <td>Name</td>
-        <td>Assigned to</td>
-        </th>
+        <table class="borders">
+        <tr>
+        <th>Name</th>
+        <th>Assigned to</th>
+        <th>Completed</th>
+        </tr>
         {{#each tasks}}
         <tr>
         {{> task}}
@@ -75,14 +76,22 @@
 </template>
 
 <template name="task">
-    <div class="task">
         <td>
             {{name}}
         </td>
         <td>
             {{assignedUser uid}}
         </td>
-    </div>
+        <td>
+            {{#if task.isComplete}}
+                Yes
+            {{else}}
+                No
+            {{/if}}
+        </td>
+        <td>
+            <button id="completetask">Complete</button>
+        </td>
 </template>
 
 
