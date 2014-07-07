@@ -1,0 +1,66 @@
+<head>
+  <title>ar-man</title>
+</head>
+
+<body>
+  {{> main}}
+</body>
+
+<template name="main">
+    <h1>Enter customer name and charge amount (negative for payments).</h1>
+    <label for="customer">Name:</label><input id="customer" list="customers">
+    <label for="amount">Amount:</label><input type="number" id="amount">
+    <button id="addcharge">Add</button>
+    <button id="clear">Clear</button>
+    {{#if customers}}
+        <div>
+        {{>customertable}}
+        </div>
+        <div>
+        {{>customerlist}}
+        </div>
+    {{else}}
+        <div>
+            No customer info to display.
+         </div>
+    {{/if}}
+
+    
+    {{>datalists}}
+</template>
+
+
+<template name="customertable">
+    <h1>Customer Table</h1>
+    <table>
+    <tr>
+    <th>
+        Name
+    </th>
+    <th>
+        Owed
+    </th>
+    </tr>
+    </table>
+</template>
+
+<template name="customerlist">
+    {{#if customers}}
+        {{#each customers}}
+            <h1>{{name}}</h1>
+            <table>
+            <tr><td>Owes:</td><td>{{amount _id}}</td></tr>
+            </table>
+        {{/each}}
+    {{else}}
+        No customer info to display.
+    {{/if}}
+</template>
+
+<template name="datalists">
+    <datalist id="customers">
+    {{#each customers}}
+        <option data-id='{{_id}}' value='{{name}}'></option>
+    {{/each}}
+    </datalist>
+</template>
