@@ -7,12 +7,16 @@
 </body>
 
 <template name="main">
-    <h1>Enter customer name and charge amount (negative for payments).</h1>
+    <div id="container">
+    <h2>Enter customer name and charge amount (negative for payments).</h2>
     <label for="customer">Name:</label><input id="customer" list="customers">
     <label for="amount">Amount:</label><input type="number" id="amount">
     <button id="addcharge">Add</button>
     <button id="clear">Clear</button>
     {{#if customers}}
+        <div>
+        {{>chargetable}}
+        </div>
         <div>
         {{>customertable}}
         </div>
@@ -24,9 +28,40 @@
             No customer info to display.
          </div>
     {{/if}}
-
+    
+    </div>
+        
+    <script>
+        window.onkeydown = function(e) {
+            if (e.which == 13)
+                document.getElementById("addcharge").click();
+        }
+    </script>
     
     {{>datalists}}
+</template>
+
+<template name="chargetable">
+    <h1>Charge Table</h1>
+    <table id="chargetable">
+    <tr>
+    <th>Amount</th>
+    <th>Customer</th>
+    </tr>
+    {{#each charges}}
+    <tr>
+        <td>{{amount}}</td>
+        <td>{{customername customer}}</td>
+    </tr>
+    {{/each}}
+    </table>
+    Total: {{total}}
+    
+    <script>
+        $(function() {
+          $("#chargetable").tablesorter(); 
+        })
+    </script>
 </template>
 
 
@@ -41,6 +76,12 @@
         Owed
     </th>
     </tr>
+    {{#each customers}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{amount _id}}</td>
+        </tr>
+    {{/each}}
     </table>
 </template>
 
@@ -48,9 +89,7 @@
     {{#if customers}}
         {{#each customers}}
             <h1>{{name}}</h1>
-            <table>
-            <tr><td>Owes:</td><td>{{amount _id}}</td></tr>
-            </table>
+            Owes: {{amount _id}}
         {{/each}}
     {{else}}
         No customer info to display.

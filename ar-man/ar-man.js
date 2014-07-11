@@ -6,8 +6,9 @@ if (Meteor.isClient) {
   Template.main.events({
     'click #addcharge': function () {
         var name = document.getElementById("customer").value;
-        if (name.length == 0) {
+        if (!name) {
             console.log("name is a required field");
+            return;
         }
         var customer = Customer.findOne({name:name});
         var cid,amount;
@@ -24,12 +25,44 @@ if (Meteor.isClient) {
     'click #clear' : clearClient 
   });
   
-  //Template.main.customers = Template.customerlist.customers = Template.datalists.customers
+  Template.chargetable.customername = function(cid) {
+    //return cid;
+    var customer = Customer.findOne({_id:cid});
+    console.log(customer);
+    if (customer) {
+        return customer.name;
+    }
+    return "";
+  };
+  
+  Template.chargetable.charges = function() {
+    return Ar.find({});
+  };
+  
+  Template.chargetable.total = function() {
+    var result = 0;
+    Ar.find({}).forEach(function(doc) {
+        result +=doc.amount;
+    });
+    return result;
+  };
+  
+  Template.main.customers = Template.customerlist.customers = Template.datalists.customers = 
+  Template.customertable.customers =
+  function() {
+    return Customer.find({});
+  }
+  
+  Template.customerlist.amount = Template.customertable.amount =
+    function(cid) {
+        var result = 0;
+        Ar.find({customer:cid}).forEach(function(doc) {
+            result += doc.amount
+        });
+        return result;
+    }
   
   Template.customerlist.helpers({
-    customers: function() {
-        return Customer.find({});
-    },
     amount: function(cid) {
         var result = 0;
         Ar.find({customer:cid}).forEach(function(doc) {
@@ -40,9 +73,6 @@ if (Meteor.isClient) {
   });
   
   Template.datalists.helpers({
-    customers: function() {
-        return Customer.find({});
-    }
   });
   
   Meteor.startup(function () {
